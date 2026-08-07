@@ -46,6 +46,13 @@ Run link validation (internal/local links):
 ./scripts/check-links.sh
 ```
 
+By default, this ignores external HTTP/HTTPS links to avoid CI/network flakiness and validates handbook anchors/local links.  
+To also check external links:
+
+```bash
+CHECK_EXTERNAL_LINKS=1 ./scripts/check-links.sh
+```
+
 ## CI workflow
 
 GitHub Actions workflow:

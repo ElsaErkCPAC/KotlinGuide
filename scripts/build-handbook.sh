@@ -3,8 +3,9 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SRC="$ROOT_DIR/handbook/android-kotlin-jetpack-handbook.md"
-CSS="$ROOT_DIR/handbook/assets/handbook.css"
+CSS_SRC="$ROOT_DIR/handbook/assets/handbook.css"
 OUT_DIR="$ROOT_DIR/handbook/output"
+CSS_OUT="$OUT_DIR/handbook.css"
 HTML_OUT="$OUT_DIR/android-kotlin-jetpack-handbook.html"
 PDF_OUT="$OUT_DIR/android-kotlin-jetpack-handbook.pdf"
 DOCX_OUT="$OUT_DIR/android-kotlin-jetpack-handbook.docx"
@@ -18,6 +19,7 @@ for cmd in pandoc wkhtmltopdf; do
 done
 
 mkdir -p "$OUT_DIR"
+cp "$CSS_SRC" "$CSS_OUT"
 
 pandoc "$SRC" \
   --standalone \
@@ -25,7 +27,7 @@ pandoc "$SRC" \
   --to html5 \
   --toc \
   --number-sections \
-  --css "$CSS" \
+  --css "handbook.css" \
   --metadata title="Android-Only App Handbook (Kotlin + Jetpack)" \
   -o "$HTML_OUT"
 
@@ -41,5 +43,6 @@ pandoc "$SRC" \
   -o "$DOCX_OUT"
 
 echo "Built:"
+echo "  $HTML_OUT"
 echo "  $PDF_OUT"
 echo "  $DOCX_OUT"
