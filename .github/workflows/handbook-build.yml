@@ -1,0 +1,42 @@
+name: Build Android Handbook
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build-handbook:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc wkhtmltopdf
+
+      - name: Setup Node.js for link checks
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate markdown links
+        run: ./scripts/check-links.sh
+
+      - name: Build PDF and DOCX
+        run: ./scripts/build-handbook.sh
+
+      - name: Upload handbook artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-kotlin-jetpack-handbook
+          path: |
+            handbook/output/android-kotlin-jetpack-handbook.pdf
+            handbook/output/android-kotlin-jetpack-handbook.docx
+            handbook/output/android-kotlin-jetpack-handbook.html
+            handbook/output/handbook.css

@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="KotlinGuide" />
+  <meta name="dcterms.date" content="2026-08-07" />
+  <title>Android-Only App Handbook (Kotlin + Jetpack)</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="handbook.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Android-Only App Handbook (Kotlin + Jetpack)</h1>
+<p class="subtitle">A beginner field guide for Python developers</p>
+<p class="author">KotlinGuide</p>
+<p class="date">2026-08-07</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#where-do-i-look-fast-map"
+id="toc-where-do-i-look-fast-map"><span
+class="toc-section-number">1</span> Where do I look? (Fast map)</a></li>
+<li><a href="#chapter-1-setup-check-5-minutes"
+id="toc-chapter-1-setup-check-5-minutes"><span
+class="toc-section-number">2</span> Chapter 1: Setup check (5
+minutes)</a></li>
+<li><a href="#chapter-2-project-map--gradle-basics"
+id="toc-chapter-2-project-map--gradle-basics"><span
+class="toc-section-number">3</span> Chapter 2: Project map + Gradle
+basics</a>
+<ul>
+<li><a href="#21-typical-structure" id="toc-21-typical-structure"><span
+class="toc-section-number">3.1</span> 2.1 Typical structure</a></li>
+<li><a href="#22-files-you-will-touch-most"
+id="toc-22-files-you-will-touch-most"><span
+class="toc-section-number">3.2</span> 2.2 Files you will touch
+most</a></li>
+<li><a href="#23-gradle-in-beginner-terms"
+id="toc-23-gradle-in-beginner-terms"><span
+class="toc-section-number">3.3</span> 2.3 Gradle in beginner
+terms</a></li>
+</ul></li>
+<li><a href="#chapter-3-python--kotlin-bridge"
+id="toc-chapter-3-python--kotlin-bridge"><span
+class="toc-section-number">4</span> Chapter 3: Python → Kotlin
+bridge</a>
+<ul>
+<li><a href="#31-variables-types-null-safety"
+id="toc-31-variables-types-null-safety"><span
+class="toc-section-number">4.1</span> 3.1 Variables, types, null
+safety</a></li>
+<li><a href="#32-conditions-and-loops"
+id="toc-32-conditions-and-loops"><span
+class="toc-section-number">4.2</span> 3.2 Conditions and loops</a></li>
+<li><a href="#33-functions" id="toc-33-functions"><span
+class="toc-section-number">4.3</span> 3.3 Functions</a></li>
+<li><a href="#34-classes--data-classes"
+id="toc-34-classes--data-classes"><span
+class="toc-section-number">4.4</span> 3.4 Classes + data
+classes</a></li>
+<li><a href="#35-collections--lambdas"
+id="toc-35-collections--lambdas"><span
+class="toc-section-number">4.5</span> 3.5 Collections + lambdas</a></li>
+<li><a href="#36-exceptions" id="toc-36-exceptions"><span
+class="toc-section-number">4.6</span> 3.6 Exceptions</a></li>
+</ul></li>
+<li><a href="#chapter-4-android-fundamentals"
+id="toc-chapter-4-android-fundamentals"><span
+class="toc-section-number">5</span> Chapter 4: Android fundamentals</a>
+<ul>
+<li><a href="#41-activity-lifecycle-single-activity-apps-still-use-this"
+id="toc-41-activity-lifecycle-single-activity-apps-still-use-this"><span
+class="toc-section-number">5.1</span> 4.1 Activity lifecycle
+(single-activity apps still use this)</a></li>
+<li><a href="#42-core-concepts" id="toc-42-core-concepts"><span
+class="toc-section-number">5.2</span> 4.2 Core concepts</a></li>
+<li><a href="#43-configuration-changes"
+id="toc-43-configuration-changes"><span
+class="toc-section-number">5.3</span> 4.3 Configuration changes</a></li>
+</ul></li>
+<li><a href="#chapter-5-compose-ui-essentials-material-3"
+id="toc-chapter-5-compose-ui-essentials-material-3"><span
+class="toc-section-number">6</span> Chapter 5: Compose UI essentials
+(Material 3)</a>
+<ul>
+<li><a href="#51-composables" id="toc-51-composables"><span
+class="toc-section-number">6.1</span> 5.1 Composables</a></li>
+<li><a href="#52-modifiers-layout-text-buttons-input"
+id="toc-52-modifiers-layout-text-buttons-input"><span
+class="toc-section-number">6.2</span> 5.2 Modifiers, layout, text,
+buttons, input</a></li>
+<li><a href="#53-lists-and-iconsimages"
+id="toc-53-lists-and-iconsimages"><span
+class="toc-section-number">6.3</span> 5.3 Lists and
+icons/images</a></li>
+<li><a href="#54-theme--previews" id="toc-54-theme--previews"><span
+class="toc-section-number">6.4</span> 5.4 Theme + previews</a></li>
+<li><a href="#55-accessibility--adaptive-basics"
+id="toc-55-accessibility--adaptive-basics"><span
+class="toc-section-number">6.5</span> 5.5 Accessibility + adaptive
+basics</a></li>
+</ul></li>
+<li><a href="#chapter-6-state--recomposition"
+id="toc-chapter-6-state--recomposition"><span
+class="toc-section-number">7</span> Chapter 6: State + recomposition</a>
+<ul>
+<li><a href="#61-remember-and-mutablestateof"
+id="toc-61-remember-and-mutablestateof"><span
+class="toc-section-number">7.1</span> 6.1 <code>remember</code> and
+<code>mutableStateOf</code></a></li>
+<li><a href="#62-state-hoisting" id="toc-62-state-hoisting"><span
+class="toc-section-number">7.2</span> 6.2 State hoisting</a></li>
+<li><a href="#63-unidirectional-data-flow-udf"
+id="toc-63-unidirectional-data-flow-udf"><span
+class="toc-section-number">7.3</span> 6.3 Unidirectional data flow
+(UDF)</a></li>
+</ul></li>
+<li><a href="#chapter-7-architecture-without-buzzword-overload"
+id="toc-chapter-7-architecture-without-buzzword-overload"><span
+class="toc-section-number">8</span> Chapter 7: Architecture without
+buzzword overload</a>
+<ul>
+<li><a href="#71-ui-layer" id="toc-71-ui-layer"><span
+class="toc-section-number">8.1</span> 7.1 UI layer</a></li>
+<li><a href="#72-viewmodel" id="toc-72-viewmodel"><span
+class="toc-section-number">8.2</span> 7.2 ViewModel</a></li>
+<li><a href="#73-repository" id="toc-73-repository"><span
+class="toc-section-number">8.3</span> 7.3 Repository</a></li>
+<li><a href="#74-coroutines-and-flow-beginner-framing"
+id="toc-74-coroutines-and-flow-beginner-framing"><span
+class="toc-section-number">8.4</span> 7.4 Coroutines and Flow (beginner
+framing)</a></li>
+</ul></li>
+<li><a href="#chapter-8-navigation-compose"
+id="toc-chapter-8-navigation-compose"><span
+class="toc-section-number">9</span> Chapter 8: Navigation
+Compose</a></li>
+<li><a href="#chapter-9-persistence-datastore--room"
+id="toc-chapter-9-persistence-datastore--room"><span
+class="toc-section-number">10</span> Chapter 9: Persistence (DataStore +
+Room)</a>
+<ul>
+<li><a href="#91-datastore-for-preferences"
+id="toc-91-datastore-for-preferences"><span
+class="toc-section-number">10.1</span> 9.1 DataStore for
+preferences</a></li>
+<li><a href="#92-room-for-structured-data"
+id="toc-92-room-for-structured-data"><span
+class="toc-section-number">10.2</span> 9.2 Room for structured
+data</a></li>
+</ul></li>
+<li><a href="#chapter-10-networking-retrofit--safe-secrets"
+id="toc-chapter-10-networking-retrofit--safe-secrets"><span
+class="toc-section-number">11</span> Chapter 10: Networking (Retrofit +
+safe secrets)</a>
+<ul>
+<li><a href="#101-basics" id="toc-101-basics"><span
+class="toc-section-number">11.1</span> 10.1 Basics</a></li>
+<li><a href="#102-retrofit--kotlin-serialization"
+id="toc-102-retrofit--kotlin-serialization"><span
+class="toc-section-number">11.2</span> 10.2 Retrofit + Kotlin
+serialization</a></li>
+<li><a href="#103-loadingerror-state-pattern"
+id="toc-103-loadingerror-state-pattern"><span
+class="toc-section-number">11.3</span> 10.3 Loading/error state
+pattern</a></li>
+<li><a href="#104-secret-safety-checklist"
+id="toc-104-secret-safety-checklist"><span
+class="toc-section-number">11.4</span> 10.4 Secret safety
+checklist</a></li>
+</ul></li>
+<li><a href="#chapter-11-background-work-with-workmanager"
+id="toc-chapter-11-background-work-with-workmanager"><span
+class="toc-section-number">12</span> Chapter 11: Background work with
+WorkManager</a></li>
+<li><a href="#chapter-12-runtime-permissions--privacysecurity"
+id="toc-chapter-12-runtime-permissions--privacysecurity"><span
+class="toc-section-number">13</span> Chapter 12: Runtime permissions +
+privacy/security</a></li>
+<li><a href="#chapter-13-debugging--troubleshooting-tree"
+id="toc-chapter-13-debugging--troubleshooting-tree"><span
+class="toc-section-number">14</span> Chapter 13: Debugging +
+troubleshooting tree</a>
+<ul>
+<li><a href="#131-practical-tools" id="toc-131-practical-tools"><span
+class="toc-section-number">14.1</span> 13.1 Practical tools</a></li>
+<li><a href="#132-common-gradlebuild-problems"
+id="toc-132-common-gradlebuild-problems"><span
+class="toc-section-number">14.2</span> 13.2 Common Gradle/build
+problems</a></li>
+<li><a href="#133-troubleshooting-decision-tree"
+id="toc-133-troubleshooting-decision-tree"><span
+class="toc-section-number">14.3</span> 13.3 Troubleshooting decision
+tree</a></li>
+</ul></li>
+<li><a href="#chapter-14-testing-basics"
+id="toc-chapter-14-testing-basics"><span
+class="toc-section-number">15</span> Chapter 14: Testing basics</a>
+<ul>
+<li><a href="#141-what-to-test-first"
+id="toc-141-what-to-test-first"><span
+class="toc-section-number">15.1</span> 14.1 What to test first</a></li>
+<li><a href="#142-local-unit-test-vs-ui-test"
+id="toc-142-local-unit-test-vs-ui-test"><span
+class="toc-section-number">15.2</span> 14.2 Local unit test vs UI
+test</a></li>
+</ul></li>
+<li><a href="#chapter-15-release-basics-signing-versioning-play-store"
+id="toc-chapter-15-release-basics-signing-versioning-play-store"><span
+class="toc-section-number">16</span> Chapter 15: Release basics
+(signing, versioning, Play Store)</a></li>
+<li><a href="#chapter-16-cohesive-sample-app-task-tiny"
+id="toc-chapter-16-cohesive-sample-app-task-tiny"><span
+class="toc-section-number">17</span> Chapter 16: Cohesive sample app
+(Task Tiny)</a>
+<ul>
+<li><a href="#161-feature-outline" id="toc-161-feature-outline"><span
+class="toc-section-number">17.1</span> 16.1 Feature outline</a></li>
+<li><a href="#162-core-pieces" id="toc-162-core-pieces"><span
+class="toc-section-number">17.2</span> 16.2 Core pieces</a>
+<ul>
+<li><a href="#entity--dao" id="toc-entity--dao"><span
+class="toc-section-number">17.2.1</span> Entity + DAO</a></li>
+<li><a href="#repository" id="toc-repository"><span
+class="toc-section-number">17.2.2</span> Repository</a></li>
+<li><a href="#viewmodel" id="toc-viewmodel"><span
+class="toc-section-number">17.2.3</span> ViewModel</a></li>
+<li><a href="#navigation--screens" id="toc-navigation--screens"><span
+class="toc-section-number">17.2.4</span> Navigation + screens</a></li>
+</ul></li>
+<li><a href="#163-why-this-sample-matters"
+id="toc-163-why-this-sample-matters"><span
+class="toc-section-number">17.3</span> 16.3 Why this sample
+matters</a></li>
+</ul></li>
+<li><a href="#troubleshooting-quick-section"
+id="toc-troubleshooting-quick-section"><span
+class="toc-section-number">18</span> Troubleshooting quick
+section</a></li>
+<li><a href="#quick-references-cheat-sheets"
+id="toc-quick-references-cheat-sheets"><span
+class="toc-section-number">19</span> Quick references (cheat sheets)</a>
+<ul>
+<li><a href="#kotlin-mini-cheat" id="toc-kotlin-mini-cheat"><span
+class="toc-section-number">19.1</span> Kotlin mini-cheat</a></li>
+<li><a href="#compose-state-mini-cheat"
+id="toc-compose-state-mini-cheat"><span
+class="toc-section-number">19.2</span> Compose state mini-cheat</a></li>
+<li><a href="#coroutine--flow-mini-cheat"
+id="toc-coroutine--flow-mini-cheat"><span
+class="toc-section-number">19.3</span> Coroutine + Flow
+mini-cheat</a></li>
+<li><a href="#room-mini-cheat" id="toc-room-mini-cheat"><span
+class="toc-section-number">19.4</span> Room mini-cheat</a></li>
+</ul></li>
+<li><a href="#glossary" id="toc-glossary"><span
+class="toc-section-number">20</span> Glossary</a></li>
+<li><a href="#index-a-z" id="toc-index-a-z"><span
+class="toc-section-number">21</span> Index (A-Z)</a></li>
+<li><a href="#references-official-docs-first"
+id="toc-references-official-docs-first"><span
+class="toc-section-number">22</span> References (official docs
+first)</a></li>
+</ul>
+</nav>
+<blockquote>
+<p>📘 <strong>How to use this handbook:</strong> Start with the
+<strong>Where do I look? map</strong> below. Then jump to a chapter
+using the table of contents.</p>
+</blockquote>
+<h1 data-number="1" id="where-do-i-look-fast-map"><span
+class="header-section-number">1</span> Where do I look? (Fast map)</h1>
+<table>
+<thead>
+<tr class="header">
+<th>If you need to...</th>
+<th>Go to</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Check Android Studio and devices quickly</td>
+<td><a href="#chapter-1-setup-check-5-minutes">Chapter 1: Setup
+check</a></td>
+</tr>
+<tr class="even">
+<td>Understand project files and Gradle</td>
+<td><a href="#chapter-2-project-map--gradle-basics">Chapter 2: Project
+map + Gradle basics</a></td>
+</tr>
+<tr class="odd">
+<td>Translate Python thinking to Kotlin</td>
+<td><a href="#chapter-3-python--kotlin-bridge">Chapter 3: Python →
+Kotlin bridge</a></td>
+</tr>
+<tr class="even">
+<td>Learn app lifecycle, manifest, resources</td>
+<td><a href="#chapter-4-android-fundamentals">Chapter 4: Android
+fundamentals</a></td>
+</tr>
+<tr class="odd">
+<td>Build UI with Compose + Material 3</td>
+<td><a href="#chapter-5-compose-ui-essentials-material-3">Chapter 5:
+Compose UI essentials</a></td>
+</tr>
+<tr class="even">
+<td>Understand state and recomposition</td>
+<td><a href="#chapter-6-state--recomposition">Chapter 6: State +
+recomposition</a></td>
+</tr>
+<tr class="odd">
+<td>Structure code with ViewModel/repository</td>
+<td><a href="#chapter-7-architecture-without-buzzword-overload">Chapter
+7: Architecture without buzzword overload</a></td>
+</tr>
+<tr class="even">
+<td>Navigate between screens</td>
+<td><a href="#chapter-8-navigation-compose">Chapter 8: Navigation
+Compose</a></td>
+</tr>
+<tr class="odd">
+<td>Save preferences and local data</td>
+<td><a href="#chapter-9-persistence-datastore--room">Chapter 9:
+Persistence (DataStore + Room)</a></td>
+</tr>
+<tr class="even">
+<td>Call APIs safely</td>
+<td><a href="#chapter-10-networking-retrofit--safe-secrets">Chapter 10:
+Networking</a></td>
+</tr>
+<tr class="odd">
+<td>Run background jobs</td>
+<td><a href="#chapter-11-background-work-with-workmanager">Chapter 11:
+WorkManager</a></td>
+</tr>
+<tr class="even">
+<td>Handle permissions and privacy</td>
+<td><a href="#chapter-12-runtime-permissions--privacysecurity">Chapter
+12: Runtime permissions + privacy/security</a></td>
+</tr>
+<tr class="odd">
+<td>Debug build/app issues fast</td>
+<td><a href="#chapter-13-debugging--troubleshooting-tree">Chapter 13:
+Debugging + troubleshooting tree</a></td>
+</tr>
+<tr class="even">
+<td>Test the right things</td>
+<td><a href="#chapter-14-testing-basics">Chapter 14: Testing
+basics</a></td>
+</tr>
+<tr class="odd">
+<td>Prepare release + Play Store</td>
+<td><a
+href="#chapter-15-release-basics-signing-versioning-play-store">Chapter
+15: Release basics</a></td>
+</tr>
+<tr class="even">
+<td>See a full mini app flow</td>
+<td><a href="#chapter-16-cohesive-sample-app-task-tiny">Chapter 16:
+Cohesive sample app</a></td>
+</tr>
+<tr class="odd">
+<td>Look up terms quickly</td>
+<td><a href="#glossary">Glossary</a></td>
+</tr>
+<tr class="even">
+<td>Find topics alphabetically</td>
+<td><a href="#index-a-z">Index</a></td>
+</tr>
+<tr class="odd">
+<td>Quick copy-paste reminders</td>
+<td><a href="#quick-references-cheat-sheets">Quick references</a></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 data-number="2" id="chapter-1-setup-check-5-minutes"><span
+class="header-section-number">2</span> Chapter 1: Setup check (5
+minutes)</h1>
+<p>✅ Android Studio recent stable version installed<br />
+✅ Android SDK + Platform Tools installed<br />
+✅ Emulator image (x86_64 or arm64) downloaded<br />
+✅ USB debugging enabled on physical Android device (optional)<br />
+✅ <code>adb devices</code> shows your emulator/device</p>
+<blockquote>
+<p>💡 <strong>Tip:</strong> If your emulator is slow, use an x86_64
+system image with hardware acceleration.</p>
+</blockquote>
+<p>Quick health checks:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> devices</span></code></pre></div>
+<p>If a device is missing:</p>
+<ol type="1">
+<li>Restart ADB:
+<code>adb kill-server &amp;&amp; adb start-server</code></li>
+<li>Replug cable / authorize USB debugging again</li>
+<li>For Windows, verify OEM USB driver</li>
+</ol>
+<hr />
+<h1 data-number="3" id="chapter-2-project-map--gradle-basics"><span
+class="header-section-number">3</span> Chapter 2: Project map + Gradle
+basics</h1>
+<p>A modern Compose app usually uses a <strong>single activity</strong>
+and many composable screens.</p>
+<h2 data-number="3.1" id="21-typical-structure"><span
+class="header-section-number">3.1</span> 2.1 Typical structure</h2>
+<pre class="text"><code>app/
+  src/main/
+    AndroidManifest.xml
+    java/... (or kotlin/...)
+      ui/
+      data/
+      domain/ (optional)
+    res/
+      drawable/
+      values/
+      mipmap/
+  build.gradle.kts
+build.gradle.kts (project)
+settings.gradle.kts
+gradle/libs.versions.toml</code></pre>
+<h2 data-number="3.2" id="22-files-you-will-touch-most"><span
+class="header-section-number">3.2</span> 2.2 Files you will touch
+most</h2>
+<table>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>AndroidManifest.xml</code></td>
+<td>Declares app components + permissions</td>
+</tr>
+<tr class="even">
+<td><code>app/build.gradle.kts</code></td>
+<td>App dependencies + Android build settings</td>
+</tr>
+<tr class="odd">
+<td><code>gradle/libs.versions.toml</code></td>
+<td>Central version catalog</td>
+</tr>
+<tr class="even">
+<td><code>MainActivity.kt</code></td>
+<td>App entry activity</td>
+</tr>
+<tr class="odd">
+<td><code>ui/...</code></td>
+<td>Compose screens/components</td>
+</tr>
+<tr class="even">
+<td><code>res/values/strings.xml</code></td>
+<td>User-visible text</td>
+</tr>
+</tbody>
+</table>
+<h2 data-number="3.3" id="23-gradle-in-beginner-terms"><span
+class="header-section-number">3.3</span> 2.3 Gradle in beginner
+terms</h2>
+<ul>
+<li><strong>Gradle</strong> = build system (downloads libraries,
+compiles, packages APK/AAB).</li>
+<li><strong>Plugin</strong> = extends Gradle (Android plugin, Kotlin
+plugin).</li>
+<li><strong>Dependency</strong> = external library (Compose, Room,
+Retrofit).</li>
+<li><strong>Sync</strong> = Android Studio refreshes project after build
+file changes.</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>Common mistake:</strong> editing dependency versions in
+multiple files. Prefer one source in
+<code>libs.versions.toml</code>.</p>
+</blockquote>
+<hr />
+<h1 data-number="4" id="chapter-3-python--kotlin-bridge"><span
+class="header-section-number">4</span> Chapter 3: Python → Kotlin
+bridge</h1>
+<blockquote>
+<p>🐍➡️🟣 <strong>Python comparison callout</strong> included in every
+section.</p>
+</blockquote>
+<h2 data-number="4.1" id="31-variables-types-null-safety"><span
+class="header-section-number">4.1</span> 3.1 Variables, types, null
+safety</h2>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> <span class="va">name</span><span class="op">:</span> <span class="kw">String</span> <span class="op">=</span> <span class="st">&quot;Elsa&quot;</span>   <span class="co">// immutable (like conventionally constant)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> <span class="va">score</span><span class="op">:</span> <span class="kw">Int</span> <span class="op">=</span> <span class="dv">0</span>           <span class="co">// mutable</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> <span class="va">nickname</span><span class="op">:</span> <span class="kw">String</span><span class="op">?</span> <span class="op">=</span> <span class="kw">null</span> <span class="co">// nullable type</span></span></code></pre></div>
+<p>Python vs Kotlin:</p>
+<ul>
+<li>Python: dynamically typed (<code>name = "Elsa"</code>)</li>
+<li>Kotlin: statically typed; nullability is explicit
+(<code>String</code> vs <code>String?</code>)</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> <span class="va">len</span> <span class="op">=</span> nickname<span class="op">?.</span>length <span class="op">?:</span> <span class="dv">0</span></span></code></pre></div>
+<h2 data-number="4.2" id="32-conditions-and-loops"><span
+class="header-section-number">4.2</span> 3.2 Conditions and loops</h2>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>score <span class="op">&gt;</span> <span class="dv">10</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    println<span class="op">(</span><span class="st">&quot;High&quot;</span><span class="op">)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    println<span class="op">(</span><span class="st">&quot;Low&quot;</span><span class="op">)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span>i <span class="kw">in</span> <span class="dv">0</span> until <span class="dv">3</span><span class="op">)</span> println<span class="op">(</span>i<span class="op">)</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span>item <span class="kw">in</span> listOf<span class="op">(</span><span class="st">&quot;a&quot;</span><span class="op">,</span> <span class="st">&quot;b&quot;</span><span class="op">))</span> println<span class="op">(</span>item<span class="op">)</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span>score <span class="op">&lt;</span> <span class="dv">5</span><span class="op">)</span> score<span class="op">++</span></span></code></pre></div>
+<h2 data-number="4.3" id="33-functions"><span
+class="header-section-number">4.3</span> 3.3 Functions</h2>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> <span class="fu">greet</span><span class="op">(</span><span class="va">name</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="va">excited</span><span class="op">:</span> <span class="dt">Boolean</span> <span class="op">=</span> false<span class="op">):</span> <span class="dt">String</span> <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> <span class="cf">if</span> <span class="op">(</span>excited<span class="op">)</span> <span class="st">&quot;Hi, </span><span class="ss">$name</span><span class="st">!&quot;</span> <span class="cf">else</span> <span class="st">&quot;Hi, </span><span class="ss">$name</span><span class="st">&quot;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h2 data-number="4.4" id="34-classes--data-classes"><span
+class="header-section-number">4.4</span> 3.4 Classes + data classes</h2>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Counter <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> <span class="va">value</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">inc</span><span class="op">()</span> <span class="op">{</span> value<span class="op">++</span> <span class="op">}</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">class</span> Task<span class="op">(</span><span class="kw">val</span> <span class="va">id</span><span class="op">:</span> <span class="dt">Long</span><span class="op">,</span> <span class="kw">val</span> <span class="va">title</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">done</span><span class="op">:</span> <span class="dt">Boolean</span><span class="op">)</span></span></code></pre></div>
+<p><code>data class</code> auto-generates
+<code>equals/hashCode/toString/copy</code>.</p>
+<h2 data-number="4.5" id="35-collections--lambdas"><span
+class="header-section-number">4.5</span> 3.5 Collections + lambdas</h2>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> <span class="va">tasks</span> <span class="op">=</span> listOf<span class="op">(</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    Task<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="st">&quot;Read&quot;</span><span class="op">,</span> <span class="kw">false</span><span class="op">),</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    Task<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="st">&quot;Code&quot;</span><span class="op">,</span> <span class="kw">true</span><span class="op">)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> <span class="va">openTitles</span> <span class="op">=</span> tasks</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>filter <span class="op">{</span> <span class="op">!</span>it<span class="op">.</span>done <span class="op">}</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>map <span class="op">{</span> it<span class="op">.</span>title <span class="op">}</span></span></code></pre></div>
+<h2 data-number="4.6" id="36-exceptions"><span
+class="header-section-number">4.6</span> 3.6 Exceptions</h2>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">n</span> <span class="op">=</span> <span class="st">&quot;12a&quot;</span><span class="op">.</span>toInt<span class="op">()</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">catch</span> <span class="op">(</span>e<span class="op">:</span> NumberFormatException<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    println<span class="op">(</span><span class="st">&quot;Bad number&quot;</span><span class="op">)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<blockquote>
+<p>⚠️ Kotlin has checked-like clarity through types
+(<code>Result</code>, nullable types), but Java-style checked exceptions
+are not required.</p>
+</blockquote>
+<hr />
+<h1 data-number="5" id="chapter-4-android-fundamentals"><span
+class="header-section-number">5</span> Chapter 4: Android
+fundamentals</h1>
+<h2 data-number="5.1"
+id="41-activity-lifecycle-single-activity-apps-still-use-this"><span
+class="header-section-number">5.1</span> 4.1 Activity lifecycle
+(single-activity apps still use this)</h2>
+<pre class="text"><code>onCreate -&gt; onStart -&gt; onResume -&gt; (running)
+          &lt;- onPause &lt;- onStop &lt;- onDestroy</code></pre>
+<ul>
+<li><code>onCreate</code>: initialize once.</li>
+<li><code>onStart/onResume</code>: app visible/interactive.</li>
+<li><code>onPause/onStop</code>: release expensive resources.</li>
+</ul>
+<h2 data-number="5.2" id="42-core-concepts"><span
+class="header-section-number">5.2</span> 4.2 Core concepts</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Activity</td>
+<td>Android app entry window (host for Compose UI)</td>
+</tr>
+<tr class="even">
+<td>Manifest</td>
+<td>App metadata, permissions, launch activity</td>
+</tr>
+<tr class="odd">
+<td>Resource</td>
+<td>Externalized values/assets (<code>strings</code>,
+<code>colors</code>, <code>drawables</code>)</td>
+</tr>
+<tr class="even">
+<td>Context</td>
+<td>Handle to app/system services</td>
+</tr>
+<tr class="odd">
+<td>Configuration change</td>
+<td>Runtime environment change (rotation, font scale, locale)</td>
+</tr>
+</tbody>
+</table>
+<h2 data-number="5.3" id="43-configuration-changes"><span
+class="header-section-number">5.3</span> 4.3 Configuration changes</h2>
+<p>Compose state in plain <code>remember</code> is lost on activity
+recreation. Use:</p>
+<ul>
+<li><code>rememberSaveable</code> for simple UI state</li>
+<li><code>ViewModel</code> for screen/business state</li>
+</ul>
+<hr />
+<h1 data-number="6"
+id="chapter-5-compose-ui-essentials-material-3"><span
+class="header-section-number">6</span> Chapter 5: Compose UI essentials
+(Material 3)</h1>
+<h2 data-number="6.1" id="51-composables"><span
+class="header-section-number">6.1</span> 5.1 Composables</h2>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Composable</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> <span class="fu">GreetingCard</span><span class="op">(</span><span class="va">name</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    Text<span class="op">(</span>text <span class="op">=</span> <span class="st">&quot;Hello, </span><span class="ss">$name</span><span class="st">&quot;</span><span class="op">)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>A composable is a function that describes UI.</p>
+<h2 data-number="6.2" id="52-modifiers-layout-text-buttons-input"><span
+class="header-section-number">6.2</span> 5.2 Modifiers, layout, text,
+buttons, input</h2>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Composable</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> <span class="fu">NameEditor</span><span class="op">(</span><span class="va">name</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="va">onNameChange</span><span class="op">:</span> <span class="op">(</span><span class="dt">String</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">Unit</span><span class="op">,</span> <span class="va">onSave</span><span class="op">:</span> <span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">Unit</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    Column<span class="op">(</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        modifier <span class="op">=</span> Modifier</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>fillMaxWidth<span class="op">()</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>padding<span class="op">(</span><span class="fl">16.</span>dp<span class="op">),</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        verticalArrangement <span class="op">=</span> Arrangement<span class="op">.</span>spacedBy<span class="op">(</span><span class="fl">12.</span>dp<span class="op">)</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        Text<span class="op">(</span><span class="st">&quot;Profile&quot;</span><span class="op">,</span> style <span class="op">=</span> MaterialTheme<span class="op">.</span>typography<span class="op">.</span>headlineSmall<span class="op">)</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        OutlinedTextField<span class="op">(</span>value <span class="op">=</span> name<span class="op">,</span> onValueChange <span class="op">=</span> onNameChange<span class="op">,</span> label <span class="op">=</span> <span class="op">{</span> Text<span class="op">(</span><span class="st">&quot;Name&quot;</span><span class="op">)</span> <span class="op">})</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        Button<span class="op">(</span>onClick <span class="op">=</span> onSave<span class="op">)</span> <span class="op">{</span> Text<span class="op">(</span><span class="st">&quot;Save&quot;</span><span class="op">)</span> <span class="op">}</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h2 data-number="6.3" id="53-lists-and-iconsimages"><span
+class="header-section-number">6.3</span> 5.3 Lists and icons/images</h2>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Composable</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> <span class="fu">TaskList</span><span class="op">(</span><span class="va">tasks</span><span class="op">:</span> <span class="dt">List</span>&lt;<span class="va">Task</span>&gt;<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    LazyColumn <span class="op">{</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        items<span class="op">(</span>tasks<span class="op">,</span> key <span class="op">=</span> <span class="op">{</span> it<span class="op">.</span>id <span class="op">})</span> <span class="op">{</span> task <span class="op">-&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>            ListItem<span class="op">(</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                headlineContent <span class="op">=</span> <span class="op">{</span> Text<span class="op">(</span>task<span class="op">.</span>title<span class="op">)</span> <span class="op">},</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                leadingContent <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                    Icon<span class="op">(</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                        imageVector <span class="op">=</span> <span class="cf">if</span> <span class="op">(</span>task<span class="op">.</span>done<span class="op">)</span> Icons<span class="op">.</span>Default<span class="op">.</span>CheckCircle <span class="cf">else</span> Icons<span class="op">.</span>Default<span class="op">.</span>RadioButtonUnchecked<span class="op">,</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                        contentDescription <span class="op">=</span> <span class="cf">if</span> <span class="op">(</span>task<span class="op">.</span>done<span class="op">)</span> <span class="st">&quot;Done&quot;</span> <span class="cf">else</span> <span class="st">&quot;Open&quot;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                    <span class="op">)</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>            <span class="op">)</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h2 data-number="6.4" id="54-theme--previews"><span
+class="header-section-number">6.4</span> 5.4 Theme + previews</h2>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Preview</span><span class="op">(</span>showBackground <span class="op">=</span> <span class="kw">true</span><span class="op">)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="at">@Composable</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> <span class="fu">GreetingPreview</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    MaterialTheme <span class="op">{</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        GreetingCard<span class="op">(</span><span class="st">&quot;Android&quot;</span><span class="op">)</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h2 data-number="6.5" id="55-accessibility--adaptive-basics"><span
+class="header-section-number">6.5</span> 5.5 Accessibility + adaptive
+basics</h2>
+<ul>
+<li>Provide meaningful <code>contentDescription</code> for important
+icons/images.</li>
+<li>Use minimum touch target ~48dp.</li>
+<li>Test large font scale and dark mode.</li>
+<li>Avoid fixed widths when possible; use <code>Modifier.weight</code>,
+responsive layouts.</li>
+</ul>
+<blockquote>
+<p>✅ Never rely on color alone: pair color with icon/text labels.</p>
+</blockquote>
+<hr />
+<h1 data-number="7" id="chapter-6-state--recomposition"><span
+class="header-section-number">7</span> Chapter 6: State +
+recomposition</h1>
+<h2 data-number="7.1" id="61-remember-and-mutablestateof"><span
+class="header-section-number">7.1</span> 6.1 <code>remember</code> and
+<code>mutableStateOf</code></h2>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Composable</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> <span class="fu">Counter</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> <span class="va">count</span> <span class="kw">by</span> remember <span class="op">{</span> mutableStateOf<span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">}</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    Button<span class="op">(</span>onClick <span class="op">=</span> <span class="op">{</span> count<span class="op">++</span> <span class="op">})</span> <span class="op">{</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        Text<span class="op">(</span><span class="st">&quot;Count: </span><span class="ss">$count</span><span class="st">&quot;</span><span class="op">)</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>When <code>count</code> changes, Compose recomposes affected UI.</p>
+<h2 data-number="7.2" id="62-state-hoisting"><span
+class="header-section-number">7.2</span> 6.2 State hoisting</h2>
+<p>Keep state in parent, pass value + callbacks down.</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Composable</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> <span class="fu">CounterHost</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> <span class="va">count</span> <span class="kw">by</span> rememberSaveable <span class="op">{</span> mutableStateOf<span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">}</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    CounterView<span class="op">(</span>count <span class="op">=</span> count<span class="op">,</span> onInc <span class="op">=</span> <span class="op">{</span> count<span class="op">++</span> <span class="op">})</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="at">@Composable</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> <span class="fu">CounterView</span><span class="op">(</span><span class="va">count</span><span class="op">:</span> <span class="dt">Int</span><span class="op">,</span> <span class="va">onInc</span><span class="op">:</span> <span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">Unit</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    Button<span class="op">(</span>onClick <span class="op">=</span> onInc<span class="op">)</span> <span class="op">{</span> Text<span class="op">(</span><span class="st">&quot;Count: </span><span class="ss">$count</span><span class="st">&quot;</span><span class="op">)</span> <span class="op">}</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h2 data-number="7.3" id="63-unidirectional-data-flow-udf"><span
+class="header-section-number">7.3</span> 6.3 Unidirectional data flow
+(UDF)</h2>
+<pre class="text"><code>User Action -&gt; Event -&gt; ViewModel updates State -&gt; UI redraws from State</code></pre>
+<p>This avoids "mystery mutations" from many directions.</p>
+<hr />
+<h1 data-number="8"
+id="chapter-7-architecture-without-buzzword-overload"><span
+class="header-section-number">8</span> Chapter 7: Architecture without
+buzzword overload</h1>
+<p>Simple mental model:</p>
+<pre class="text"><code>UI (Compose) &lt;-&gt; ViewModel &lt;-&gt; Repository &lt;-&gt; Data sources (Room / network / DataStore)</code></pre>
+<h2 data-number="8.1" id="71-ui-layer"><span
+class="header-section-number">8.1</span> 7.1 UI layer</h2>
+<ul>
+<li>Renders immutable UI state.</li>
+<li>Sends user events upward.</li>
+</ul>
+<h2 data-number="8.2" id="72-viewmodel"><span
+class="header-section-number">8.2</span> 7.2 ViewModel</h2>
+<ul>
+<li>Holds screen state across config changes.</li>
+<li>Launches coroutines in <code>viewModelScope</code>.</li>
+</ul>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">class</span> TasksUiState<span class="op">(</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">items</span><span class="op">:</span> <span class="dt">List</span>&lt;<span class="va">Task</span>&gt; <span class="op">=</span> emptyList<span class="op">(),</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">isLoading</span><span class="op">:</span> <span class="dt">Boolean</span> <span class="op">=</span> false<span class="op">,</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">errorMessage</span><span class="op">:</span> <span class="dt">String</span><span class="op">?</span> <span class="op">=</span> null</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span></code></pre></div>
+<h2 data-number="8.3" id="73-repository"><span
+class="header-section-number">8.3</span> 7.3 Repository</h2>
+<ul>
+<li>Single place coordinating local + remote data.</li>
+<li>Exposes <code>Flow&lt;T&gt;</code> for observable streams.</li>
+</ul>
+<h2 data-number="8.4" id="74-coroutines-and-flow-beginner-framing"><span
+class="header-section-number">8.4</span> 7.4 Coroutines and Flow
+(beginner framing)</h2>
+<ul>
+<li><strong>Coroutine</strong>: lightweight async task.</li>
+<li><strong>Flow</strong>: stream of values over time.</li>
+</ul>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> <span class="va">uiState</span><span class="op">:</span> StateFlow<span class="op">&lt;</span>TasksUiState<span class="op">&gt;</span></span></code></pre></div>
+<blockquote>
+<p>💡 You will hear "MVVM". Here it only means this practical split:
+<strong>View (Compose), ViewModel (state logic), Model/data (repository
++ sources).</strong></p>
+</blockquote>
+<hr />
+<h1 data-number="9" id="chapter-8-navigation-compose"><span
+class="header-section-number">9</span> Chapter 8: Navigation
+Compose</h1>
+<p>Use <code>NavHost</code> with route strings or typed routes.</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Composable</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> <span class="fu">AppNav</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">navController</span> <span class="op">=</span> rememberNavController<span class="op">()</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    NavHost<span class="op">(</span>navController<span class="op">,</span> startDestination <span class="op">=</span> <span class="st">&quot;list&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        composable<span class="op">(</span><span class="st">&quot;list&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>            ListScreen<span class="op">(</span>onOpenDetail <span class="op">=</span> <span class="op">{</span> id <span class="op">-&gt;</span> navController<span class="op">.</span>navigate<span class="op">(</span><span class="st">&quot;detail/</span><span class="ss">$id</span><span class="st">&quot;</span><span class="op">)</span> <span class="op">})</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        composable<span class="op">(</span><span class="st">&quot;detail/{taskId}&quot;</span><span class="op">)</span> <span class="op">{</span> backStackEntry <span class="op">-&gt;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>            <span class="kw">val</span> <span class="va">id</span> <span class="op">=</span> backStackEntry<span class="op">.</span>arguments<span class="op">?.</span>getString<span class="op">(</span><span class="st">&quot;taskId&quot;</span><span class="op">)?.</span>toLongOrNull<span class="op">()</span> <span class="op">?:</span> return<span class="at">@composable</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>            DetailScreen<span class="op">(</span>taskId <span class="op">=</span> id<span class="op">,</span> onBack <span class="op">=</span> <span class="op">{</span> navController<span class="op">.</span>popBackStack<span class="op">()</span> <span class="op">})</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Guidelines:</p>
+<ul>
+<li>Pass small IDs as args, not huge objects.</li>
+<li>Keep route constants in one place.</li>
+</ul>
+<hr />
+<h1 data-number="10" id="chapter-9-persistence-datastore--room"><span
+class="header-section-number">10</span> Chapter 9: Persistence
+(DataStore + Room)</h1>
+<h2 data-number="10.1" id="91-datastore-for-preferences"><span
+class="header-section-number">10.1</span> 9.1 DataStore for
+preferences</h2>
+<p>Use for key-value settings (theme, sort order).</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> <span class="va">Context</span><span class="op">.</span>dataStore <span class="kw">by</span> preferencesDataStore<span class="op">(</span>name <span class="op">=</span> <span class="st">&quot;settings&quot;</span><span class="op">)</span></span></code></pre></div>
+<h2 data-number="10.2" id="92-room-for-structured-data"><span
+class="header-section-number">10.2</span> 9.2 Room for structured
+data</h2>
+<p>Use for relational local data with SQL-backed entities.</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Entity</span><span class="op">(</span>tableName <span class="op">=</span> <span class="st">&quot;tasks&quot;</span><span class="op">)</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">class</span> TaskEntity<span class="op">(</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    @<span class="va">PrimaryKey</span>(<span class="va">autoGenerate</span> <span class="op">=</span> true<span class="op">)</span> <span class="kw">val</span> id<span class="op">:</span> <span class="dt">Long</span> = 0<span class="op">,</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">title</span><span class="op">:</span> <span class="kw">String</span><span class="op">,</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">done</span><span class="op">:</span> <span class="kw">Boolean</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="at">@Dao</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> TaskDao <span class="op">{</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Query</span><span class="op">(</span><span class="st">&quot;SELECT * FROM tasks ORDER BY id DESC&quot;</span><span class="op">)</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">observeAll</span><span class="op">():</span> <span class="dt">Flow</span><span class="op">&lt;</span><span class="dt">List</span><span class="op">&lt;</span><span class="dt">TaskEntity</span><span class="op">&gt;&gt;</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Insert</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">suspend</span> <span class="kw">fun</span> <span class="fu">insert</span><span class="op">(</span><span class="va">task</span><span class="op">:</span> <span class="dt">TaskEntity</span><span class="op">)</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<hr />
+<h1 data-number="11"
+id="chapter-10-networking-retrofit--safe-secrets"><span
+class="header-section-number">11</span> Chapter 10: Networking (Retrofit
++ safe secrets)</h1>
+<h2 data-number="11.1" id="101-basics"><span
+class="header-section-number">11.1</span> 10.1 Basics</h2>
+<ul>
+<li>Add
+<code>&lt;uses-permission android:name="android.permission.INTERNET" /&gt;</code>
+in manifest.</li>
+<li>API call lifecycle: request → loading → success/error.</li>
+</ul>
+<h2 data-number="11.2" id="102-retrofit--kotlin-serialization"><span
+class="header-section-number">11.2</span> 10.2 Retrofit + Kotlin
+serialization</h2>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Serializable</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">class</span> QuoteDto<span class="op">(</span><span class="kw">val</span> <span class="va">id</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">text</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> QuoteApi <span class="op">{</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">@GET</span><span class="op">(</span><span class="st">&quot;quotes/random&quot;</span><span class="op">)</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    suspend <span class="kw">fun</span> <span class="fu">randomQuote</span><span class="op">():</span> <span class="dt">QuoteDto</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 data-number="11.3" id="103-loadingerror-state-pattern"><span
+class="header-section-number">11.3</span> 10.3 Loading/error state
+pattern</h2>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sealed</span> <span class="kw">interface</span> LoadState<span class="op">&lt;</span><span class="kw">out</span> <span class="dt">T</span><span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">data</span> <span class="kw">object</span> Loading <span class="op">:</span> <span class="dt">LoadState</span><span class="op">&lt;</span><span class="dt">Nothing</span><span class="op">&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">data</span> <span class="kw">class</span> Success<span class="op">&lt;</span><span class="dt">T</span><span class="op">&gt;(</span><span class="kw">val</span> <span class="kw">data</span><span class="op">:</span> <span class="dt">T</span><span class="op">)</span> <span class="op">:</span> <span class="dt">LoadState</span><span class="op">&lt;</span><span class="dt">T</span><span class="op">&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">data</span> <span class="kw">class</span> Error<span class="op">(</span><span class="kw">val</span> <span class="va">message</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> <span class="op">:</span> <span class="dt">LoadState</span><span class="op">&lt;</span><span class="dt">Nothing</span><span class="op">&gt;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 data-number="11.4" id="104-secret-safety-checklist"><span
+class="header-section-number">11.4</span> 10.4 Secret safety
+checklist</h2>
+<ul>
+<li>❌ Never hardcode API keys in source.</li>
+<li>❌ Never commit secrets to Git.</li>
+<li>✅ Use secure backend when possible.</li>
+<li>✅ For local dev, inject placeholders via
+<code>local.properties</code> / CI secrets.</li>
+<li>✅ Restrict keys server-side (domain/IP quotas, scopes,
+rotation).</li>
+</ul>
+<hr />
+<h1 data-number="12"
+id="chapter-11-background-work-with-workmanager"><span
+class="header-section-number">12</span> Chapter 11: Background work with
+WorkManager</h1>
+<p>Use WorkManager for <strong>deferrable, guaranteed</strong>
+background tasks (sync, upload retry).</p>
+<p>Do <strong>not</strong> use WorkManager for:</p>
+<ul>
+<li>immediate UI actions needing instant completion</li>
+<li>exact-alarm precision tasks</li>
+</ul>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SyncWorker<span class="op">(</span><span class="va">appContext</span><span class="op">:</span> <span class="dt">Context</span><span class="op">,</span> <span class="va">params</span><span class="op">:</span> <span class="dt">WorkerParameters</span><span class="op">)</span> <span class="op">:</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">CoroutineWorker</span><span class="op">(</span><span class="va">appContext</span><span class="op">,</span> <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">override</span> suspend <span class="kw">fun</span> <span class="fu">doWork</span><span class="op">():</span> <span class="dt">Result</span> <span class="op">{</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> <span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>            <span class="co">// sync</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>            Result<span class="op">.</span>success<span class="op">()</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span> <span class="cf">catch</span> <span class="op">(</span>e<span class="op">:</span> Exception<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>            Result<span class="op">.</span>retry<span class="op">()</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<hr />
+<h1 data-number="13"
+id="chapter-12-runtime-permissions--privacysecurity"><span
+class="header-section-number">13</span> Chapter 12: Runtime permissions
++ privacy/security</h1>
+<p>Runtime permissions (camera/location/etc.) should be requested at the
+moment of need.</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> <span class="va">launcher</span> <span class="op">=</span> rememberLauncherForActivityResult<span class="op">(</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    contract <span class="op">=</span> ActivityResultContracts<span class="op">.</span>RequestPermission<span class="op">()</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="op">)</span> <span class="op">{</span> granted <span class="op">-&gt;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// update state</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Privacy/security mini-checklist:</p>
+<ul>
+<li>Ask only necessary permissions.</li>
+<li>Explain why before prompt.</li>
+<li>Handle denial gracefully.</li>
+<li>Minimize data collection.</li>
+<li>Use HTTPS.</li>
+<li>Avoid logging PII/secrets.</li>
+</ul>
+<hr />
+<h1 data-number="14"
+id="chapter-13-debugging--troubleshooting-tree"><span
+class="header-section-number">14</span> Chapter 13: Debugging +
+troubleshooting tree</h1>
+<h2 data-number="14.1" id="131-practical-tools"><span
+class="header-section-number">14.1</span> 13.1 Practical tools</h2>
+<ul>
+<li><strong>Logcat</strong>: filtered runtime logs.</li>
+<li><strong>Breakpoints</strong>: pause and inspect values.</li>
+<li><strong>Layout Inspector</strong>: inspect Compose hierarchy.</li>
+<li><strong>Build output</strong>: first failure is often root
+cause.</li>
+</ul>
+<h2 data-number="14.2" id="132-common-gradlebuild-problems"><span
+class="header-section-number">14.2</span> 13.2 Common Gradle/build
+problems</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>First fix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dependency not found</td>
+<td>wrong repo/version</td>
+<td>sync, verify version catalog</td>
+</tr>
+<tr class="even">
+<td>Kotlin/Compose mismatch</td>
+<td>incompatible compiler/plugin</td>
+<td>align Kotlin + Compose versions</td>
+</tr>
+<tr class="odd">
+<td>Duplicate class</td>
+<td>conflicting transitive deps</td>
+<td>inspect dependency tree</td>
+</tr>
+<tr class="even">
+<td>Manifest merge failed</td>
+<td>conflicting metadata</td>
+<td>inspect merged manifest</td>
+</tr>
+</tbody>
+</table>
+<h2 data-number="14.3" id="133-troubleshooting-decision-tree"><span
+class="header-section-number">14.3</span> 13.3 Troubleshooting decision
+tree</h2>
+<pre class="text"><code>Build fails?
+ ├─ Yes -&gt; Read FIRST red error line
+ │   ├─ Dependency error -&gt; check version catalog + sync
+ │   ├─ Kotlin/Compose compile error -&gt; inspect changed file + imports
+ │   ├─ Manifest error -&gt; inspect merged manifest + permissions/activities
+ │   └─ Still stuck -&gt; Invalidate caches + restart + clean build
+ └─ No (runs but broken)
+     ├─ UI wrong -&gt; use Preview + Layout Inspector
+     ├─ Logic wrong -&gt; add breakpoint + inspect state transitions
+     └─ Data wrong -&gt; verify repository flow + Room query + API payload</code></pre>
+<hr />
+<h1 data-number="15" id="chapter-14-testing-basics"><span
+class="header-section-number">15</span> Chapter 14: Testing basics</h1>
+<h2 data-number="15.1" id="141-what-to-test-first"><span
+class="header-section-number">15.1</span> 14.1 What to test first</h2>
+<ol type="1">
+<li>ViewModel state transitions (loading/success/error).</li>
+<li>Repository logic with fake data sources.</li>
+<li>Compose UI critical interactions (button click, text shown).</li>
+</ol>
+<h2 data-number="15.2" id="142-local-unit-test-vs-ui-test"><span
+class="header-section-number">15.2</span> 14.2 Local unit test vs UI
+test</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Test type</th>
+<th>Runs on</th>
+<th>Good for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Local unit test</td>
+<td>JVM</td>
+<td>business logic, ViewModel, mapping</td>
+</tr>
+<tr class="even">
+<td>Instrumented/Compose UI test</td>
+<td>device/emulator</td>
+<td>UI behavior, semantics</td>
+</tr>
+</tbody>
+</table>
+<p>Compose test sketch:</p>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>composeTestRule<span class="op">.</span>onNodeWithText<span class="op">(</span><span class="st">&quot;Save&quot;</span><span class="op">).</span>performClick<span class="op">()</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>composeTestRule<span class="op">.</span>onNodeWithText<span class="op">(</span><span class="st">&quot;Saved&quot;</span><span class="op">).</span>assertExists<span class="op">()</span></span></code></pre></div>
+<hr />
+<h1 data-number="16"
+id="chapter-15-release-basics-signing-versioning-play-store"><span
+class="header-section-number">16</span> Chapter 15: Release basics
+(signing, versioning, Play Store)</h1>
+<p>High-level flow:</p>
+<ol type="1">
+<li>Update <code>versionCode</code> (int, always increases) and
+<code>versionName</code> (human-readable).</li>
+<li>Create signed release build (AAB preferred).</li>
+<li>Verify release notes + privacy declarations.</li>
+<li>Upload to Play Console (internal testing track first).</li>
+</ol>
+<blockquote>
+<p>⚠️ Keep signing keys secure and backed up. Losing app signing access
+is painful.</p>
+</blockquote>
+<hr />
+<h1 data-number="17" id="chapter-16-cohesive-sample-app-task-tiny"><span
+class="header-section-number">17</span> Chapter 16: Cohesive sample app
+(Task Tiny)</h1>
+<p>Goal: one tiny app that connects Compose UI + state + ViewModel +
+navigation + Room.</p>
+<h2 data-number="17.1" id="161-feature-outline"><span
+class="header-section-number">17.1</span> 16.1 Feature outline</h2>
+<ul>
+<li>Screen A: task list</li>
+<li>Screen B: add task</li>
+<li>Persist tasks locally with Room</li>
+<li>ViewModel exposes <code>StateFlow&lt;TasksUiState&gt;</code></li>
+</ul>
+<h2 data-number="17.2" id="162-core-pieces"><span
+class="header-section-number">17.2</span> 16.2 Core pieces</h2>
+<h3 data-number="17.2.1" id="entity--dao"><span
+class="header-section-number">17.2.1</span> Entity + DAO</h3>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Entity</span><span class="op">(</span>tableName <span class="op">=</span> <span class="st">&quot;tasks&quot;</span><span class="op">)</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">class</span> TaskEntity<span class="op">(</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    @<span class="va">PrimaryKey</span>(<span class="va">autoGenerate</span> <span class="op">=</span> true<span class="op">)</span> <span class="kw">val</span> id<span class="op">:</span> <span class="dt">Long</span> = 0<span class="op">,</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">title</span><span class="op">:</span> <span class="kw">String</span><span class="op">,</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">done</span><span class="op">:</span> <span class="kw">Boolean</span> <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="at">@Dao</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> TaskDao <span class="op">{</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Query</span><span class="op">(</span><span class="st">&quot;SELECT * FROM tasks ORDER BY id DESC&quot;</span><span class="op">)</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">observeAll</span><span class="op">():</span> <span class="dt">Flow</span><span class="op">&lt;</span><span class="dt">List</span><span class="op">&lt;</span><span class="dt">TaskEntity</span><span class="op">&gt;&gt;</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Insert</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">suspend</span> <span class="kw">fun</span> <span class="fu">insert</span><span class="op">(</span><span class="va">task</span><span class="op">:</span> <span class="dt">TaskEntity</span><span class="op">)</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 data-number="17.2.2" id="repository"><span
+class="header-section-number">17.2.2</span> Repository</h3>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TaskRepository<span class="op">(</span><span class="kw">private</span> <span class="kw">val</span> <span class="va">dao</span><span class="op">:</span> <span class="dt">TaskDao</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">observeTasks</span><span class="op">():</span> <span class="dt">Flow</span><span class="op">&lt;</span><span class="dt">List</span><span class="op">&lt;</span><span class="dt">Task</span><span class="op">&gt;&gt;</span> <span class="op">=</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        dao<span class="op">.</span>observeAll<span class="op">().</span>map <span class="op">{</span> rows <span class="op">-&gt;</span> rows<span class="op">.</span>map <span class="op">{</span> Task<span class="op">(</span>it<span class="op">.</span>id<span class="op">,</span> it<span class="op">.</span>title<span class="op">,</span> it<span class="op">.</span>done<span class="op">)</span> <span class="op">}</span> <span class="op">}</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    suspend <span class="kw">fun</span> <span class="fu">addTask</span><span class="op">(</span><span class="va">title</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        dao<span class="op">.</span>insert<span class="op">(</span>TaskEntity<span class="op">(</span>title <span class="op">=</span> title<span class="op">.</span>trim<span class="op">()))</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 data-number="17.2.3" id="viewmodel"><span
+class="header-section-number">17.2.3</span> ViewModel</h3>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TaskViewModel<span class="op">(</span><span class="kw">private</span> <span class="kw">val</span> <span class="va">repo</span><span class="op">:</span> <span class="dt">TaskRepository</span><span class="op">)</span> <span class="op">:</span> <span class="dt">ViewModel</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="kw">val</span> <span class="va">_uiState</span> <span class="op">=</span> MutableStateFlow<span class="op">(</span>TasksUiState<span class="op">(</span>isLoading <span class="op">=</span> <span class="kw">true</span><span class="op">))</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">uiState</span><span class="op">:</span> StateFlow<span class="op">&lt;</span>TasksUiState<span class="op">&gt;</span> <span class="op">=</span> _uiState</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    init <span class="op">{</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        viewModelScope<span class="op">.</span>launch <span class="op">{</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>            repo<span class="op">.</span>observeTasks<span class="op">().</span>collect <span class="op">{</span> tasks <span class="op">-&gt;</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>                _uiState<span class="op">.</span>value <span class="op">=</span> TasksUiState<span class="op">(</span>items <span class="op">=</span> tasks<span class="op">,</span> isLoading <span class="op">=</span> <span class="kw">false</span><span class="op">)</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">addTask</span><span class="op">(</span><span class="va">title</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>        viewModelScope<span class="op">.</span>launch <span class="op">{</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>title<span class="op">.</span>isBlank<span class="op">())</span> return<span class="at">@launch</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>            repo<span class="op">.</span>addTask<span class="op">(</span>title<span class="op">)</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 data-number="17.2.4" id="navigation--screens"><span
+class="header-section-number">17.2.4</span> Navigation + screens</h3>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Composable</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> <span class="fu">TaskApp</span><span class="op">(</span><span class="va">vm</span><span class="op">:</span> <span class="dt">TaskViewModel</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">state</span> <span class="kw">by</span> vm<span class="op">.</span>uiState<span class="op">.</span>collectAsStateWithLifecycle<span class="op">()</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">nav</span> <span class="op">=</span> rememberNavController<span class="op">()</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    NavHost<span class="op">(</span>nav<span class="op">,</span> startDestination <span class="op">=</span> <span class="st">&quot;list&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>        composable<span class="op">(</span><span class="st">&quot;list&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>            TaskListScreen<span class="op">(</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>                state <span class="op">=</span> state<span class="op">,</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>                onAddClick <span class="op">=</span> <span class="op">{</span> nav<span class="op">.</span>navigate<span class="op">(</span><span class="st">&quot;add&quot;</span><span class="op">)</span> <span class="op">}</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>            <span class="op">)</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>        composable<span class="op">(</span><span class="st">&quot;add&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>            AddTaskScreen<span class="op">(</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>                onSave <span class="op">=</span> <span class="op">{</span> title <span class="op">-&gt;</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>                    vm<span class="op">.</span>addTask<span class="op">(</span>title<span class="op">)</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>                    nav<span class="op">.</span>popBackStack<span class="op">()</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>                <span class="op">},</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>                onBack <span class="op">=</span> <span class="op">{</span> nav<span class="op">.</span>popBackStack<span class="op">()</span> <span class="op">}</span></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>            <span class="op">)</span></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h2 data-number="17.3" id="163-why-this-sample-matters"><span
+class="header-section-number">17.3</span> 16.3 Why this sample
+matters</h2>
+<p>It demonstrates modern Android defaults without overwhelming
+ceremony:</p>
+<ul>
+<li>Single activity</li>
+<li>Compose-first UI</li>
+<li>State-driven rendering</li>
+<li>ViewModel + repository separation</li>
+<li>Navigation Compose</li>
+<li>Room persistence</li>
+</ul>
+<hr />
+<h1 data-number="18" id="troubleshooting-quick-section"><span
+class="header-section-number">18</span> Troubleshooting quick
+section</h1>
+<ul>
+<li><strong>App compiles but blank screen:</strong> confirm
+<code>setContent { ... }</code> actually calls your root
+composable.</li>
+<li><strong>Button clicks do nothing:</strong> verify callback wiring
+(<code>onClick</code> passed correctly).</li>
+<li><strong>State not updating:</strong> state may not be
+<code>mutableStateOf</code>/<code>StateFlow</code>, or UI not collecting
+it.</li>
+<li><strong>Room query not updating UI:</strong> DAO must return
+<code>Flow</code> and UI must collect.</li>
+<li><strong>Navigation crash:</strong> route argument missing or wrong
+type.</li>
+</ul>
+<hr />
+<h1 data-number="19" id="quick-references-cheat-sheets"><span
+class="header-section-number">19</span> Quick references (cheat
+sheets)</h1>
+<h2 data-number="19.1" id="kotlin-mini-cheat"><span
+class="header-section-number">19.1</span> Kotlin mini-cheat</h2>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> <span class="va">x</span> <span class="op">=</span> <span class="dv">1</span>            <span class="co">// immutable</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> <span class="va">y</span> <span class="op">=</span> <span class="dv">2</span>            <span class="co">// mutable</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> <span class="va">s</span><span class="op">:</span> <span class="kw">String</span><span class="op">?</span> <span class="op">=</span> <span class="kw">null</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> <span class="va">len</span> <span class="op">=</span> s<span class="op">?.</span>length <span class="op">?:</span> <span class="dv">0</span></span></code></pre></div>
+<h2 data-number="19.2" id="compose-state-mini-cheat"><span
+class="header-section-number">19.2</span> Compose state mini-cheat</h2>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> <span class="va">text</span> <span class="kw">by</span> rememberSaveable <span class="op">{</span> mutableStateOf<span class="op">(</span><span class="st">&quot;&quot;</span><span class="op">)</span> <span class="op">}</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>TextField<span class="op">(</span>value <span class="op">=</span> text<span class="op">,</span> onValueChange <span class="op">=</span> <span class="op">{</span> text <span class="op">=</span> it <span class="op">})</span></span></code></pre></div>
+<h2 data-number="19.3" id="coroutine--flow-mini-cheat"><span
+class="header-section-number">19.3</span> Coroutine + Flow
+mini-cheat</h2>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>viewModelScope<span class="op">.</span>launch <span class="op">{</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    repository<span class="op">.</span>observe<span class="op">().</span>collect <span class="op">{</span> value <span class="op">-&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">// update ui state</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h2 data-number="19.4" id="room-mini-cheat"><span
+class="header-section-number">19.4</span> Room mini-cheat</h2>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Dao</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> ExampleDao <span class="op">{</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Query</span><span class="op">(</span><span class="st">&quot;SELECT * FROM item&quot;</span><span class="op">)</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">observeItems</span><span class="op">():</span> <span class="dt">Flow</span><span class="op">&lt;</span><span class="dt">List</span><span class="op">&lt;</span><span class="dt">ItemEntity</span><span class="op">&gt;&gt;</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<hr />
+<h1 data-number="20" id="glossary"><span
+class="header-section-number">20</span> Glossary</h1>
+<ul>
+<li><strong>AAB</strong>: Android App Bundle, preferred Play upload
+format.</li>
+<li><strong>Activity</strong>: Android component hosting app UI entry
+point.</li>
+<li><strong>Composable</strong>: function that describes part of UI in
+Compose.</li>
+<li><strong>Coroutine</strong>: lightweight async execution unit in
+Kotlin.</li>
+<li><strong>DataStore</strong>: Jetpack key-value persistence API.</li>
+<li><strong>Flow</strong>: cold asynchronous stream of values.</li>
+<li><strong>Gradle</strong>: build automation system used by Android
+projects.</li>
+<li><strong>Manifest</strong>: app declaration file
+(<code>AndroidManifest.xml</code>).</li>
+<li><strong>Material 3</strong>: modern Android design
+system/components.</li>
+<li><strong>Recomposition</strong>: Compose re-running UI functions when
+state changes.</li>
+<li><strong>Repository</strong>: abstraction coordinating data
+access.</li>
+<li><strong>Room</strong>: Jetpack SQLite abstraction layer.</li>
+<li><strong>State hoisting</strong>: moving state up and passing it down
+as parameters.</li>
+<li><strong>ViewModel</strong>: lifecycle-aware holder for UI
+state/logic.</li>
+<li><strong>WorkManager</strong>: API for guaranteed deferrable
+background work.</li>
+</ul>
+<hr />
+<h1 data-number="21" id="index-a-z"><span
+class="header-section-number">21</span> Index (A-Z)</h1>
+<p><strong>A</strong>: Accessibility, Activities, ADB, AAB<br />
+<strong>B</strong>: Breakpoints, Build errors<br />
+<strong>C</strong>: Composable, Configuration changes, Context,
+Coroutines<br />
+<strong>D</strong>: DataStore, Dependencies, Debugging, DI (mentioned
+conceptually)<br />
+<strong>F</strong>: Flow<br />
+<strong>G</strong>: Gradle, Glossary<br />
+<strong>I</strong>: INTERNET permission, Index<br />
+<strong>L</strong>: Lifecycle, Logcat<br />
+<strong>M</strong>: Manifest, Material 3, Mutable state, MVVM
+framing<br />
+<strong>N</strong>: Navigation Compose, Null safety<br />
+<strong>P</strong>: Permissions, Play Store, Previews, Python
+bridge<br />
+<strong>R</strong>: Recomposition, Repository, Resources, Room<br />
+<strong>S</strong>: State hoisting, Security checklist, Signing<br />
+<strong>T</strong>: Testing, Troubleshooting, Themes<br />
+<strong>U</strong>: Unidirectional data flow, UI state<br />
+<strong>V</strong>: ViewModel, Versioning<br />
+<strong>W</strong>: WorkManager</p>
+<hr />
+<h1 data-number="22" id="references-official-docs-first"><span
+class="header-section-number">22</span> References (official docs
+first)</h1>
+<ul>
+<li>Android Developers: Architecture recommendations<br />
+<a
+href="https://developer.android.com/topic/architecture/recommendations">https://developer.android.com/topic/architecture/recommendations</a></li>
+<li>Android Developers: Compose documentation<br />
+<a
+href="https://developer.android.com/jetpack/compose">https://developer.android.com/jetpack/compose</a></li>
+<li>Android Developers: Navigation Compose<br />
+<a
+href="https://developer.android.com/jetpack/compose/navigation">https://developer.android.com/jetpack/compose/navigation</a></li>
+<li>Android Developers: Room<br />
+<a
+href="https://developer.android.com/training/data-storage/room">https://developer.android.com/training/data-storage/room</a></li>
+<li>Android Developers: DataStore<br />
+<a
+href="https://developer.android.com/topic/libraries/architecture/datastore">https://developer.android.com/topic/libraries/architecture/datastore</a></li>
+<li>Android Developers: WorkManager<br />
+<a
+href="https://developer.android.com/topic/libraries/architecture/workmanager">https://developer.android.com/topic/libraries/architecture/workmanager</a></li>
+<li>Android Developers: Runtime permissions<br />
+<a
+href="https://developer.android.com/training/permissions/requesting">https://developer.android.com/training/permissions/requesting</a></li>
+<li>Kotlin docs: language guide<br />
+<a
+href="https://kotlinlang.org/docs/home.html">https://kotlinlang.org/docs/home.html</a></li>
+</ul>
+<blockquote>
+<p>📎 Notes: snippets are intentionally compact and may omit imports;
+adapt package names and dependency versions to your project
+template.</p>
+</blockquote>
+</body>
+</html>
